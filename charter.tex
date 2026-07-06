@@ -3,9 +3,12 @@
 %codirector, % Uncomment to add a codirector to the title page
 ]{charter} 
 
+% Preambulo
+\usepackage{tabularx}
+\usepackage[table,xcdraw]{xcolor}
 
 % El títulos de la memoria, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \ttitle
-\titulo{Título del proyecto} 
+\titulo{Aplicación de inteligencia artificial al Revenue Management hotelero: proyección de demanda, ocupación y simulación de escenarios para hoteles de Tandil} 
 
 % Nombre del posgrado, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \degreename
 %\posgrado{Carrera de Especialización en Sistemas Embebidos} 
@@ -16,7 +19,7 @@
 
 % Tu nombre, se puede usar el cualquier lugar del documento con el comando \authorname
 % IMPORTANTE: no omitir titulaciones ni tildación en los nombres, también se recomienda escribir los nombres completos (tal cual los tienen en su documento)
-\autor{Título y Nombre del autor}
+\autor{Mg. Emiliano Daniel Iparraguirre}
 
 % El nombre del director y co-director, se puede usar el cualquier lugar del documento con el comando \supname y \cosupname y \pertesupname y \pertecosupname
 \director{Título y Nombre del director}
@@ -25,12 +28,12 @@
 \pertenenciaCoDirector{FIUBA}
 
 % Nombre del cliente, quien va a aprobar los resultados del proyecto, se puede usar con el comando \clientename y \empclientename
-\cliente{Nombre del cliente}
-\empresaCliente{Empresa del cliente}
+\cliente{Diego Garabato}
+\empresaCliente{Grupo Faro Verde}
  
-\fechaINICIO{30 de abril de 2023}		%Fecha de inicio de la cursada de GdP \fechaInicioName
-\fechaFINALPlan{18 de junio de 2023} 	%Fecha de final de cursada de GdP
-\fechaFINALTrabajo{15 de mayo de 2024}	%Fecha de defensa pública del trabajo final
+\fechaINICIO{23 de junio de 2026}		%Fecha de inicio de la cursada de GdP \fechaInicioName
+\fechaFINALPlan{11 de agosto de 2026} 	%Fecha de final de cursada de GdP
+\fechaFINALTrabajo{xx de xxx de 2026}	%Fecha de defensa pública del trabajo final
 
 
 \begin{document}
@@ -59,7 +62,7 @@
 \rowcolor[HTML]{C0C0C0} 
 Revisión & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}Detalles de los cambios realizados} & Fecha      \\ \hline
 0      & Creación del documento                                 &\fechaInicioName \\ \hline
-%1      & Se completa hasta el punto 5 inclusive                & {día} de {mes} de 202X \\ \hline
+1      & Se completa hasta el punto 5 inclusive                & {5} de {julio} de 2026 \\ \hline
 %2      & Se completa hasta el punto 9 inclusive
 %		  Se puede agregar algo más \newline
 %		  En distintas líneas \newline
@@ -85,7 +88,7 @@ Buenos Aires, \fechaInicioName
 
 \vspace{2cm}
 
-Por medio de la presente se acuerda con el \authorname\hspace{1px} que su Trabajo Final de la \degreename\hspace{1px} se titulará ``\ttitle'' y consistirá en \textcolor{red}{la implementación de un prototipo de un sistema de control de temperatura de una caldera industrial}. El trabajo tendrá un presupuesto preliminar estimado de \textcolor{red}{600} horas y un costo estimado de \textcolor{red}{\$ XXX}, con fecha de inicio el \fechaInicioName\hspace{1px} y fecha de presentación pública el \fechaFinalName.
+Por medio de la presente se acuerda con el \authorname\hspace{1px} que su Trabajo Final de la \degreename\hspace{1px} se titulará ``\ttitle'' y consistirá en desarrollar una prueba de concepto de un sistema de soporte a decisiones para Revenue Management hotelero, basado en modelos de proyección de demanda y ocupación, y en un módulo de simulación de escenarios comerciales, aplicado a los hoteles de Tandil (Mulen, La Cascada y Amaike) de Grupo Faro Verde. El trabajo tendrá un presupuesto preliminar estimado de \textcolor{red}{XXX} horas y un costo estimado de \textcolor{red}{USD XXX}, con fecha de inicio el \fechaInicioName\hspace{1px} y fecha de presentación pública el \fechaFinalName.
 
 Se adjunta a esta acta la planificación inicial.
 
@@ -103,54 +106,47 @@ Se adjunta a esta acta la planificación inicial.
 
 
 
+
 \section{1. Descripción técnica-conceptual del proyecto a realizar}
 \label{sec:descripcion}
 
-\begin{consigna}{red} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
-El objetivo es que el lector, en una o dos páginas, exponga de qué se trata el proyecto y cuáles son sus desafíos, cuál es la motivación para realizarlo y su importancia.
+La hotelería es, junto con el transporte aéreo, uno de los ejemplos clásicos de industria de gestión de activos perecederos (\textit{perishable asset management}): una habitación no vendida en una fecha determinada representa una capacidad ociosa que no puede recuperarse ni almacenarse para su venta futura, de la misma manera que un asiento vacío en un vuelo se pierde definitivamente una vez que la aeronave despega. Esta característica, sumada a una capacidad fija en el corto plazo (cantidad de habitaciones disponibles) y a una demanda variable, estacional y sensible al precio, es lo que da origen al Revenue Management como disciplina: la práctica de vender el producto adecuado, al cliente adecuado, en el momento adecuado y al precio adecuado, para maximizar el ingreso disponible.
+ 
+En este contexto, la capacidad de anticipar la demanda futura y de simular distintos escenarios comerciales o tarifarios resulta central para la toma de decisiones. Contar con herramientas que permitan proyectar esa demanda y evaluar de antemano el impacto de distintas decisiones tarifarias o comerciales constituye, por lo tanto, un aporte de valor directo para la gestión de Revenue Management de cualquier cadena hotelera.
 
-Se debe introducir el contexto del proyecto, el estado del arte en la temática, describir la propuesta de valor, cuál es el problema que atiende y cuál es la solución que se propone. Se debe dar una descripción funcional de la solución que incluya un diagrama en bloques.
+El presente proyecto se realiza en el marco de la Especialización en Inteligencia Artificial, y surge a partir de la experiencia profesional del alumno como Responsable de Análisis de Información en Grupo Faro Verde, empresa que integra distintas unidades de negocio, entre ellas la División Turismo/Hotelería. En particular, este trabajo se enfoca en los hoteles ubicados en la ciudad de Tandil: Mulen, La Cascada y Amaike.
 
-Puede ser útil incluir en esta sección la respuesta a alguna de estas preguntas:
+El objetivo del proyecto es desarrollar una prueba de concepto de un sistema de soporte a decisiones para Revenue Management hotelero, basado en modelos de proyección de demanda y ocupación esperada, y en un módulo de simulación de escenarios comerciales y tarifarios. La solución busca aportar una capa analítica complementaria al proceso actual de Revenue Management de la división, que permita anticipar ocupación y revenue esperado, comprender patrones históricos de demanda, analizar el ritmo de reservas (\textit{booking pace} o \textit{pickup}) y evaluar escenarios de decisión mediante una visualización interactiva. No se busca reemplazar el Revenue Management System (RMS) recientemente incorporado por la organización, ni automatizar la definición de tarifas.
 
-\begin{itemize}
-	\item ¿Cuál es el contexto del proyecto, es un emprendimiento personal, un proyecto para una empresa, es parte del programa de vinculación con empresas del posgrado?
-	\item ¿Existen o aplican condiciones especiales al proyecto, financiamiento de algún programa público o privado, acuerdos de confidencialidad, acuerdos sobre la propiedad intelectual de los entregables u otros?
-	\item ¿Cómo se compara la solución propuesta con el estado del arte en el campo de aplicación? ¿En qué aspectos destaca?
-	\item ¿Ayuda a la explicación si se incluye un lienzo Canvas del Modelo de Negocio?
-	\item ¿En qué estado del ciclo de vida está la solución que se propone?
-	\item ¿Cuáles son las características del cliente (el adoptante de los entregables del proyecto) qué valora, qué necesita?
-	\item ¿Por dónde pasa la innovación?
-\end{itemize}
+No existen actualmente acuerdos de confidencialidad o financiamiento externo formalizados. Los entregables académicos serán propiedad del alumno, resguardando la confidencialidad comercial de la información utilizada; en caso de publicaciones académicas, los resultados podrán presentarse de forma agregada o anonimizada.
 
-La descripción técnica-conceptual \textbf{debe incluir al menos un diagrama en bloques del sistema} y descripción funcional de la solución propuesta.
+\subsection*{Contexto operativo}
+Los hoteles de la unidad de Turismo cuentan con información histórica de reservas, ocupación y tarifas en sus sistemas de gestión hotelera. Adicionalmente, la división atravesó en los últimos meses un proceso de actualización de sus principales sistemas: el Property Management System (PMS, Todo Alojamiento), el Enterprise Resource Planning (ERP, Odoo 18 Community) y, desde mayo de 2026, un Revenue Management System (RMS) aún no incorporado a la operatoria plena. Este contexto de cambio genera una oportunidad concreta para fortalecer el uso de datos, comprender patrones de demanda y complementar el proceso con herramientas de inteligencia artificial y simulación, a la vez que exige prestar especial atención a la integración y homogeneidad de la información histórica entre sistemas.
 
-Las figuras se deben mencionar en el texto ANTES de que aparezcan con una frase como la siguiente: ``En la figura \ref{fig:diagBloques} se presenta el diagrama en bloques del sistema. Se observa que...''.  La regla es que las figuras nunca pueden ir antes de ser mencionadas en el texto, porque sino el lector no entiende por qué de pronto aparece una figura.
+\subsection*{Aspectos técnicos y estado del arte}
+La solución se encuentra en una etapa temprana del ciclo de vida: diseño conceptual, relevamiento del proceso actual y planificación del desarrollo. Durante el proyecto se avanzará hasta el desarrollo funcional de los modelos de proyección y del simulador de escenarios, su evaluación y validación con datos reales de la organización, sin incluir en el alcance la integración productiva con los sistemas transaccionales ni la automatización de decisiones tarifarias.
+
+En la figura \ref{fig:Diagrama_proyecto} se presenta el diagrama en bloques del sistema propuesto. Se observa que, a partir de distintas fuentes de datos internas y externas (PMS, ERP, RMS, calendario de eventos y variables contextuales como clima, tipo de cambio o competencia), se construye una base analítica que alimenta tres módulos principales: uno de análisis y preparación de datos (integración, limpieza y \textit{feature engineering} hotelero, incluyendo indicadores de \textit{booking pace}), uno de modelos predictivos (evaluando desde modelos base y estadísticos como ARIMA/SARIMAX y Holt-Winters/ETS, hasta modelos aditivos como Prophet, modelos de \textit{machine learning} supervisado como Random Forest, XGBoost o LightGBM, y eventualmente algún enfoque moderno de series de tiempo), y uno de simulación de escenarios comerciales o tarifarios. Los resultados se presentan finalmente en una visualización interactiva, potencialmente en Streamlit, que permite comparar escenarios y generar insumos para la toma de decisiones.
+
+\vspace{15px}
 
 \begin{figure}[htpb]
 \centering 
-\includegraphics[width=.65\textwidth]{./Figuras/diagBloques.png}
+\includegraphics[width=.95\textwidth]{./Figuras/Diagrama_proyecto.png}
 \caption{Diagrama en bloques del sistema.}
-\label{fig:diagBloques}
+\label{fig:Diagrama_proyecto}
 \end{figure}
 
-\vspace{25px}
+\vspace{15px}
 
-El tamaño del texto en TODAS las figuras debe ser adecuado \textbf{para que NO pase lo que ocurre en la figura \ref{fig:diagBloques}}, donde el lector debe esforzarse para poder leer el texto. 
 
-Los colores usados en el diagrama deben ser adecuados, tal que ayuden a comprender mejor el diagrama. Se recomienda evitar colores primarios (como rojo, verde o cyan) y usar la gama de colores pastel.
+\subsection*{Cliente y valor esperado}
+El principal cliente del proyecto es la Gerencia General de la División Turismo, ya que requiere información confiable y anticipada para respaldar las decisiones comerciales y tarifarias de los tres hoteles de Tandil. La innovación del proyecto radica en complementar el RMS recientemente incorporado con una capa analítica propia que integra proyección de demanda, análisis de \textit{pickup} y simulación de escenarios en una herramienta visual y accesible, retomando además una exploración técnica previa realizada dentro de la organización sobre datos de reservas, que no había llegado a implementarse. La solución permitirá analizar periódicamente la ocupación y el revenue proyectado por hotel, junto con simulaciones de impacto ante cambios en tarifa promedio, mix de canales u otras variables comerciales, funcionando como insumo objetivo en el proceso de planificación comercial de la división.
 
-\end{consigna} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
+Como diferencial adicional del proyecto, y sujeto a la disponibilidad y validación de datos, se evaluará la posibilidad de incorporar como alcance opcional la integración de los costos fijos y variables del ERP con la información de revenue proyectada. Esto permitiría extender la simulación de escenarios más allá del revenue esperado, proyectando también el resultado económico de cada hotel y comparándolo contra el objetivo presupuestario, definido con alcance anual y corte mensual, para cada uno de los hoteles de Tandil. De concretarse, este componente aportaría una mirada de rentabilidad y no solo comercial a la herramienta de soporte a decisiones.
 
 \section{2. Identificación y análisis de los interesados}
 \label{sec:interesados}
-
-\begin{consigna}{red} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
-\textbf{Nota importante:} borrar esto y todas las consignas en color rojo antes de entregar este documento). Esto se hace eliminando el par de comandos que forman el bloque consigna, \verb!\begin{consigna}{red}! y \verb!\end{consigna}{red}! del código. 
- 
-Es inusual que una misma persona esté en más de un rol, incluso en proyectos chicos. Si se considera que una persona cumple dos o más roles, entonces \textbf{solo dejarla en el rol más importante}. 
-
-Por ejemplo, si una persona es Cliente pero también colabora u orienta, dejarla solo como Cliente. Si una persona es el Responsable, \textbf{no debe ser colocado también como miembro del equipo}.
 
 
 \begin{table}[ht]
@@ -160,90 +156,74 @@ Por ejemplo, si una persona es Cliente pero también colabora u orienta, dejarla
 \hline
 \rowcolor[HTML]{C0C0C0} 
 Rol           & Nombre y Apellido & Organización 	& Puesto 	\\ \hline
-Auspiciante   &                   &              	&        	\\ \hline
-Cliente       & \clientename      &\empclientename	&        	\\ \hline
-Impulsor      &                   &              	&        	\\ \hline
-Responsable   & \authorname       & FIUBA        	& Alumno 	\\ \hline
-Colaboradores &                   &              	&        	\\ \hline
+Cliente       & \clientename      &	\empclientename 	&	Gerente General, División Turismo       	\\ \hline
+Responsable   & \authorname        & FIUBA        	& Alumno. 	\\ \hline
 Orientador    & \supname	      & \pertesupname 	& Director del Trabajo Final \\ \hline
-Equipo        & miembro1 \newline 
-				miembro2          &              	&        	\\ \hline
-Opositores    &                   &              	&        	\\ \hline
-Usuario final &                   &              	&        	\\ \hline
+Colaborador & Guillermo Alejandro          & \empclientename             	& Referente comercial funcional \\ \hline
+Colaborador & Francisco Lopez Ballent          & \empclientename             	& Líder de Proyectos y Excelencia Operativa \\ \hline
+Usuario final & Equipo de Revenue Management / Comercial                 & \empclientename             	&  -      	\\ \hline
 \end{tabularx}
 \end{table}
 
-El Director suele ser uno de los orientadores.
 
-No dejar celdas vacías; si no hay nada que poner en una celda colocar un signo ``-''.
-
-No dejar filas vacías; si no hay nada que poner en una fila entonces eliminarla.
-
-Es deseable listar a continuación las principales características de cada interesado.
- 
-Por ejemplo:
+A continuación, se listan las principales características de cada interesado:
 \begin{itemize}
-	\item Orientador: la Dra. Ing. María Gómez es experta en la temática y va a ayudar con la definición de los requerimientos y el desarrollo del firmware del embebido.
-	\item Auspiciante: es riguroso y exigente con la rendición de gastos. Tener mucho cuidado con esto.
-	\item Equipo: Juan Perez, suele pedir licencia porque tiene un familiar con una enfermedad. Planificar considerando esto.
+	\item Cliente: \clientename, como Gerente General de la División Turismo, es el principal responsable de aprobar los resultados del proyecto y colaborará en la definición del alcance y la validación de los entregables desde una mirada de negocio.
+	\item Colaboradores: Guillermo Alejandro es el referente comercial funcional de la división y aportará el conocimiento del proceso actual de Revenue Management, la interpretación de indicadores comerciales y la validación de los escenarios simulados. Francisco Lopez Ballent es el antecedente técnico interno del proyecto: líder del área de Proyectos y Excelencia Operativa, desarrolló previamente un pipeline de datos con información de reservas del sistema Arion (sistema PMS anterior 2022–2024) y realizó una prueba de concepto con modelos de proyección de demanda (Random Forest, XGBoost, LightGBM, Prophet), aunque no llegó a implementarse, ya que quedó en la etapa de diseño, luego de que las prioridades del negocio apuntaran al cambio completo de sistemas PMS, ERP y RMS.
+	\item Orientador: a definir.
+	\item Usuario final: el equipo de Revenue Management y Comercial de la División Turismo utilizará la herramienta como insumo en el proceso de planificación comercial y tarifaria de los hoteles de Tandil.
 \end{itemize}
-
-\end{consigna} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
 
 
 \section{3. Propósito del proyecto}
 \label{sec:proposito}
 
-\begin{consigna}{red} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
+El propósito de este proyecto es desarrollar una prueba de concepto de un sistema de soporte a decisiones para Revenue Management hotelero que proyecte demanda y ocupación esperada, analice el ritmo de reservas (\textit{booking pace}/\textit{pickup}) e incorpore un módulo de simulación de escenarios comerciales y tarifarios, integrando información histórica de reservas, ocupación y tarifas de los hoteles de Tandil de Grupo Faro Verde. Esta solución busca aportar una capa analítica complementaria al RMS recientemente incorporado por la organización, proporcionando información objetiva y anticipada que respalde la toma de decisiones comerciales de la División Turismo. Como diferencial adicional, y como alcance opcional, se buscará integrar los costos fijos y variables del ERP con el revenue proyectado, de modo de simular no solo el revenue esperado sino también el resultado económico de cada hotel frente al objetivo presupuestario anual con corte mensual.
 
-¿Por qué se hace el proyecto? ¿Qué se quiere lograr? 
-
-Se recomienda que sea solo un párrafo que continúe con la idea de la frase ``el propósito de este proyecto es...'' (omitir la frase, ya que está en el título de la sección).
-\end{consigna}
 
 \section{4. Alcance del proyecto}
 \label{sec:alcance}
 
-\begin{consigna}{red}
-¿Qué se incluye y que no se incluye en este proyecto?
+El proyecto se centrará en los tres hoteles de Tandil de Grupo Faro Verde (Mulen, La Cascada y Amaike), tomando como antecedente una prueba de concepto previa desarrollada internamente sobre datos de reservas del sistema Arion, que exploró modelos de proyección de demanda pero no llegó a implementarse.
 
-Se refiere al trabajo que se va a hacer para entregar el producto o resultado especificado. 
-
-Explicitar todo lo quede comprendido dentro del alcance del proyecto. Por ejemplo:
-
-El proyecto incluye:
+El presente proyecto incluye:
 \begin{itemize}
-	\item Ítem 1.
-	\item Ítem 2.
-		\begin{itemize}
-		\item Subítem 1.
-		\item Subítem 2.
-		\item ...
-		\end{itemize}
-	\item ...
-	
+	\item El relevamiento funcional del proceso actual de Revenue Management de la División Turismo, incluyendo el rol del RMS recientemente incorporado.
+	\item La construcción de una base de datos analítica a partir de información histórica de reservas, ocupación, tarifas y variables de contexto (calendario, eventos, clima, tipo de cambio).
+	\item El diseño y validación de modelos de proyección de demanda y ocupación, evaluando modelos base y estadísticos (naive estacional, Holt-Winters/ETS, ARIMA/SARIMAX), modelos aditivos (Prophet) y modelos de \textit{machine learning} supervisado (Random Forest, XGBoost, LightGBM), y eventualmente algún enfoque moderno de series de tiempo.
+	\item El análisis de indicadores de \textit{booking pace} o \textit{pickup} a distintos horizontes temporales (por ejemplo, 1, 7, 14 o 30 días antes del check-in).
+	\item El desarrollo de un módulo de simulación de escenarios comerciales/tarifarios, que permita comparar un escenario base contra alternativas modificando supuestos como tarifa promedio, ocupación esperada o mix de canales, y evaluar su impacto sobre indicadores como ocupación proyectada, ADR, RevPAR y revenue esperado.
+	\item Una prueba de concepto visual, potencialmente en Streamlit, que permita explorar resultados, modificar supuestos y comparar escenarios.
+	\item \textbf{(Opcional)} La integración de los costos fijos y variables del ERP con la información de revenue proyectada, para simular no solo el revenue esperado sino también el resultado económico de cada hotel, comparado contra el objetivo presupuestario (definido con alcance anual y corte mensual) para cada uno de los hoteles de Tandil. Este ítem queda sujeto a la disponibilidad y validación de la información de costos, y a que el avance del resto del alcance lo permita.
 \end{itemize}
 
-Explicitar además todo lo que no quede incluido (``El presente proyecto no incluye...'')
 
-\end{consigna} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
+El presente proyecto no incluye:
+\begin{itemize}
+	\item El reemplazo o la integración productiva con el Revenue Management System (RMS) ya incorporado por la organización.
+	\item La automatización de la definición de tarifas ni la intervención en la configuración de los sistemas transaccionales (PMS, ERP, RMS).
+	\item La incorporación de otros hoteles o unidades de negocio de Grupo Faro Verde fuera de los tres hoteles de Tandil.
+	\item El entrenamiento formal a usuarios finales o su incorporación a la rutina operativa de la empresa.
+\end{itemize}
 
 
 \section{5. Supuestos del proyecto}
 \label{sec:supuestos}
 
-\begin{consigna}{red} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
-``Para el desarrollo del presente proyecto se supone que: ...''
+Para el desarrollo del presente proyecto se supone que:
 
 \begin{itemize}
-	\item Supuesto 1.
-	\item Supuesto 2.
-	\item ...
+	\item Se contará con acceso oportuno a los \textit{datasets} históricos necesarios para el modelado (reservas, ocupación, tarifas, cancelaciones, calendario) provenientes del PMS, el ERP y el sistema Arion, en un formato utilizable y representativo de la operatoria real de los hoteles.
+	\item Se prevé que el cliente y los referentes internos (Guillermo Alejandro, como referente comercial funcional, y Francisco Lopez Ballent, como antecedente técnico) podrán destinar el tiempo necesario para reuniones de relevamiento, revisiones de avance y validación de entregables.
+	\item Se asume que la reciente actualización de sistemas (PMS, ERP y RMS) no impedirá reconstruir una base histórica homogénea, aunque pueda requerir tareas adicionales de integración y homologación entre períodos o sistemas.
+	\item Se considera que las herramientas previstas (Python, bibliotecas de proyección y \textit{machine learning}, Streamlit) son adecuadas para el desarrollo de la prueba de concepto, y que no surgirán restricciones técnicas críticas que impidan ejecutar los modelos o visualizar los resultados.
+	\item El desarrollo se llevará a cabo con los recursos disponibles del alumno (hardware personal, conectividad y herramientas de código abierto), sin requerir inversiones adicionales en infraestructura o licencias.
+	\item Se asume que no existirán bloqueos internos ni restricciones de confidencialidad que impidan el acceso a la información necesaria para el desarrollo y la validación de los modelos, más allá de los recaudos habituales de tratamiento de información comercial sensible.
+	\item Para la interpretación de resultados y la simulación de escenarios, se asume que no ocurrirán cambios abruptos en el contexto macroeconómico (inflación, tipo de cambio, regulaciones turísticas) que invaliden los patrones históricos de demanda utilizados para el modelado.
+	\item Se considera que los datos históricos disponibles reflejan adecuadamente la estacionalidad y variabilidad esperada de la demanda hotelera en Tandil, siendo válidos para el entrenamiento y evaluación de los modelos predictivos.
+	\item Para el componente opcional de integración de costos, se asume que la información de costos fijos y variables del ERP (Odoo 18) estará disponible con el nivel de detalle y granularidad necesarios para asociarla al revenue proyectado por hotel, y que el objetivo presupuestario anual con corte mensual de cada hotel se encuentra definido y accesible para su uso como referencia de comparación.
 \end{itemize}
-
-Por ejemplo, se podrían incluir supuestos respecto a disponibilidad de tiempo y recursos humanos y materiales, sobre la factibilidad técnica de distintos aspectos del proyecto, sobre otras cuestiones que sean necesarias para el éxito del proyecto como condiciones macroeconómicas o reglamentarias.
-
-\end{consigna} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
+\pagebreak
 
 \section{6. Product Backlog}
 \label{sec:backlog}
